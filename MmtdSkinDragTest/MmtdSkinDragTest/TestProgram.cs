@@ -72,8 +72,8 @@ namespace MmtdSkinDragTest
             buttonUp.Enabled = false;
             buttonDown.Enabled = false;
 
-            buttonUp.BackgroundImage = Image.FromFile(@"D:\workspace\MmtdSkinDragTest\MmtdSkinDragTest\up disable.png");
-            buttonDown.BackgroundImage = Image.FromFile(@"D:\workspace\MmtdSkinDragTest\MmtdSkinDragTest\down disable.png");
+            buttonUp.BackgroundImage = Image.FromFile(@"..\..\up disable.png");
+            buttonDown.BackgroundImage = Image.FromFile(@"..\..\down disable.png");
 
             if (tactile[tType] == "drag")
             {
@@ -86,7 +86,7 @@ namespace MmtdSkinDragTest
         {
             currPattern = randSeq[stimuliIdx];
             buttonPlay.Enabled = false;
-            buttonPlay.BackgroundImage = Image.FromFile(@"D:\workspace\MmtdSkinDragTest\MmtdSkinDragTest\play disable.png");
+            buttonPlay.BackgroundImage = Image.FromFile(@"..\..\play disable.png");
             labelGuide.Text = "Playing";
             Random random = new Random();
             Delay(random.Next(maxOnsetDelay) + 1000);
@@ -96,8 +96,8 @@ namespace MmtdSkinDragTest
             labelGuide.Text = "Click the answer";
             buttonUp.Enabled = true;
             buttonDown.Enabled = true;
-            buttonUp.BackgroundImage = Image.FromFile(@"D:\workspace\MmtdSkinDragTest\MmtdSkinDragTest\up arrow.png");
-            buttonDown.BackgroundImage = Image.FromFile(@"D:\workspace\MmtdSkinDragTest\MmtdSkinDragTest\down arrow.png");
+            buttonUp.BackgroundImage = Image.FromFile(@"..\..\up arrow.png");
+            buttonDown.BackgroundImage = Image.FromFile(@"..\..\down arrow.png");
         }
 
         private void clickAnswer(string ansPattern)
@@ -105,8 +105,8 @@ namespace MmtdSkinDragTest
             buttonUp.Enabled = false;
             buttonDown.Enabled = false;
 
-            buttonUp.BackgroundImage = Image.FromFile(@"D:\workspace\MmtdSkinDragTest\MmtdSkinDragTest\up disable.png");
-            buttonDown.BackgroundImage = Image.FromFile(@"D:\workspace\MmtdSkinDragTest\MmtdSkinDragTest\down disable.png");
+            buttonUp.BackgroundImage = Image.FromFile(@"..\..\up disable.png");
+            buttonDown.BackgroundImage = Image.FromFile(@"..\..\down disable.png");
 
             timeAnswer = DateTime.Now.Ticks;
             long RT = (timeAnswer - timeAsk) / 10000;
@@ -134,7 +134,7 @@ namespace MmtdSkinDragTest
                 labelOrder.Text = (stimuliIdx + 1).ToString() + " / 100";
                 labelGuide.Text = "";
                 buttonPlay.Enabled = true;
-                buttonPlay.BackgroundImage = Image.FromFile(@"D:\workspace\MmtdSkinDragTest\MmtdSkinDragTest\play icon.png");
+                buttonPlay.BackgroundImage = Image.FromFile(@"..\..\play icon.png");
             }
         }
 
@@ -215,35 +215,35 @@ namespace MmtdSkinDragTest
 
         private void buttonUp_MouseEnter(object sender, EventArgs e)
         {
-            buttonUp.BackgroundImage = Image.FromFile(@"D:\workspace\MmtdSkinDragTest\MmtdSkinDragTest\up hover.png");
+            buttonUp.BackgroundImage = Image.FromFile(@"..\..\up hover.png");
         }
 
         private void buttonUp_MouseLeave(object sender, EventArgs e)
         {
             if(buttonUp.Enabled)
-                buttonUp.BackgroundImage = Image.FromFile(@"D:\workspace\MmtdSkinDragTest\MmtdSkinDragTest\up arrow.png");
+                buttonUp.BackgroundImage = Image.FromFile(@"..\..\up arrow.png");
         }
 
         private void buttonPlay_MouseEnter(object sender, EventArgs e)
         {
-            buttonPlay.BackgroundImage = Image.FromFile(@"D:\workspace\MmtdSkinDragTest\MmtdSkinDragTest\play hover.png");
+            buttonPlay.BackgroundImage = Image.FromFile(@"..\..\play hover.png");
         }
 
         private void buttonPlay_MouseLeave(object sender, EventArgs e)
         {
             if(buttonPlay.Enabled)
-                buttonPlay.BackgroundImage = Image.FromFile(@"D:\workspace\MmtdSkinDragTest\MmtdSkinDragTest\play icon.png");
+                buttonPlay.BackgroundImage = Image.FromFile(@"..\..\play icon.png");
         }
 
         private void buttonDown_MouseEnter(object sender, EventArgs e)
         {
-            buttonDown.BackgroundImage = Image.FromFile(@"D:\workspace\MmtdSkinDragTest\MmtdSkinDragTest\down hover.png");
+            buttonDown.BackgroundImage = Image.FromFile(@"..\..\down hover.png");
         }
 
         private void buttonDown_MouseLeave(object sender, EventArgs e)
         {
             if(buttonDown.Enabled)
-                buttonDown.BackgroundImage = Image.FromFile(@"D:\workspace\MmtdSkinDragTest\MmtdSkinDragTest\down arrow.png");
+                buttonDown.BackgroundImage = Image.FromFile(@"..\..\down arrow.png");
         }
     }
 }
