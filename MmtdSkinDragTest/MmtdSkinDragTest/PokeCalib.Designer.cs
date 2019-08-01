@@ -38,13 +38,13 @@
             // 
             // domainUpDownPokeNum
             // 
-            this.domainUpDownPokeNum.Font = new System.Drawing.Font("경기천년제목 Light", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
-            this.domainUpDownPokeNum.Items.Add("4");
-            this.domainUpDownPokeNum.Items.Add("5");
-            this.domainUpDownPokeNum.Items.Add("6");
+            this.domainUpDownPokeNum.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(129)));
+            this.domainUpDownPokeNum.Items.Add("1");
+            this.domainUpDownPokeNum.Items.Add("2");
+            this.domainUpDownPokeNum.Items.Add("3");
             this.domainUpDownPokeNum.Location = new System.Drawing.Point(35, 98);
             this.domainUpDownPokeNum.Name = "domainUpDownPokeNum";
-            this.domainUpDownPokeNum.Size = new System.Drawing.Size(120, 37);
+            this.domainUpDownPokeNum.Size = new System.Drawing.Size(120, 41);
             this.domainUpDownPokeNum.TabIndex = 0;
             this.domainUpDownPokeNum.SelectedItemChanged += new System.EventHandler(this.domainUpDownPokeNum_SelectedItemChanged);
             // 

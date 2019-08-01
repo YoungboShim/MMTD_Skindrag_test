@@ -163,11 +163,11 @@ namespace MmtdSkinDragTest
             {
                 if (pattern == "u")
                 {
-                    pokeSend.playCmd("4,0,2;5,135,2;6,270,2;");
+                    pokeSend.playCmd("1,0,2;2,135,2;3,270,2;");
                 }
                 else if (pattern == "d")
                 {
-                    pokeSend.playCmd("4,270,2;5,135,2;6,0,2;");
+                    pokeSend.playCmd("1,270,2;2,135,2;3,0,2;");
                 }
             }
             else if (tactile[testType] == "stretch")
