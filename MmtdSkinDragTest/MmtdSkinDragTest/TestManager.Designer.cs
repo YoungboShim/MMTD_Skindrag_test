@@ -41,6 +41,7 @@
             this.textBoxZpos = new System.Windows.Forms.TextBox();
             this.labelZpos = new System.Windows.Forms.Label();
             this.buttonCalibration = new System.Windows.Forms.Button();
+            this.buttonPractice = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // buttonReset
@@ -86,7 +87,8 @@
             this.comboBoxType.FormattingEnabled = true;
             this.comboBoxType.Items.AddRange(new object[] {
             "Skin drag",
-            "Poke"});
+            "Poke",
+            "Skin stretch"});
             this.comboBoxType.Location = new System.Drawing.Point(93, 41);
             this.comboBoxType.Name = "comboBoxType";
             this.comboBoxType.Size = new System.Drawing.Size(121, 23);
@@ -143,11 +145,22 @@
             this.buttonCalibration.UseVisualStyleBackColor = true;
             this.buttonCalibration.Click += new System.EventHandler(this.buttonCalibration_Click);
             // 
+            // buttonPractice
+            // 
+            this.buttonPractice.Location = new System.Drawing.Point(220, 69);
+            this.buttonPractice.Name = "buttonPractice";
+            this.buttonPractice.Size = new System.Drawing.Size(75, 23);
+            this.buttonPractice.TabIndex = 11;
+            this.buttonPractice.Text = "Practice";
+            this.buttonPractice.UseVisualStyleBackColor = true;
+            this.buttonPractice.Click += new System.EventHandler(this.buttonPractice_Click);
+            // 
             // TestManager
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(311, 147);
+            this.Controls.Add(this.buttonPractice);
             this.Controls.Add(this.buttonCalibration);
             this.Controls.Add(this.textBoxZpos);
             this.Controls.Add(this.labelZpos);
@@ -180,5 +193,6 @@
         private System.Windows.Forms.TextBox textBoxZpos;
         private System.Windows.Forms.Label labelZpos;
         private System.Windows.Forms.Button buttonCalibration;
+        private System.Windows.Forms.Button buttonPractice;
     }
 }

@@ -67,5 +67,12 @@ namespace MmtdSkinDragTest
             pokeCalib.Show();
             //this.Hide();
         }
+
+        private void buttonPractice_Click(object sender, EventArgs e)
+        {
+            PracticeProgram practice = new PracticeProgram();
+            practice.initProgram(serialPort1, comboBoxType.SelectedIndex, Convert.ToInt32(textBoxZpos.Text), textBoxId.Text);
+            practice.Show();
+        }
     }
 }

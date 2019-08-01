@@ -8,26 +8,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO.Ports;
-using System.IO;
 
 namespace MmtdSkinDragTest
 {
-    public partial class TestProgram : Form
+    public partial class PracticeProgram : Form
     {
         int testType = 0; // 0: skin drag, 1: poke
         int zPos = 90;
         string[] patternString = { "u", "d" };
-        string[] randSeq = new string[50];
         string[] tactile = { "drag", "poke", "stretch" };
         int stimuliIdx = 0;
         string currPattern;
         int maxOnsetDelay = 1000;
         long timeAsk = 0;
         long timeAnswer = 0;
-        TextWriter logWriter;
+        bool answerMode = false;
         PokeCmdSend pokeSend;
 
-        public TestProgram()
+        public PracticeProgram()
         {
             InitializeComponent();
         }
@@ -38,42 +36,11 @@ namespace MmtdSkinDragTest
             testType = tType;
             zPos = zInitPos;
 
-            // Randomize pattern sequence
-            int[] randIdx = new int[50];
-            for (int i = 0; i < 50; i++)
-            {
-                randIdx[i] = -1;
-            }
-            for (int i = 0; i < 50; i++)
-            {
-                Random rand = new Random();
-                int tmp = rand.Next(50);
-                while (randIdx.Contains(tmp))
-                {
-                    tmp = rand.Next(50);
-                }
-                randIdx[i] = tmp;
-            }
-
-            for (int i = 0; i < 50; i++)
-            {
-                randSeq[randIdx[i]] = patternString[i % 2];
-            }
-
             // Create PokeCmdSend module if poke mode
-            if(tactile[tType] == "poke")
+            if (tactile[tType] == "poke")
             {
                 pokeSend = new PokeCmdSend(sp);
             }
-
-            logWriter = new StreamWriter("ExpDir_" + tactile[testType] + "_" + logId + ".csv", true);
-            logWriter.WriteLine("Trial#, Pattern, Answer, Correct, RT(ms)");
-
-            buttonUp.Enabled = false;
-            buttonDown.Enabled = false;
-
-            buttonUp.BackgroundImage = Image.FromFile(@"..\..\up disable.png");
-            buttonDown.BackgroundImage = Image.FromFile(@"..\..\down disable.png");
 
             if (tactile[tType] == "drag")
             {
@@ -82,60 +49,55 @@ namespace MmtdSkinDragTest
             }
         }
 
-        private void buttonPlay_Click(object sender, EventArgs e)
-        {
-            currPattern = randSeq[stimuliIdx];
-            buttonPlay.Enabled = false;
-            buttonPlay.BackgroundImage = Image.FromFile(@"..\..\play disable.png");
-            labelGuide.Text = "Playing";
-            Random random = new Random();
-            Delay(random.Next(maxOnsetDelay) + 1000);
-
-            playPattern(currPattern);
-            timeAsk = DateTime.Now.Ticks;
-            labelGuide.Text = "Click the answer";
-            buttonUp.Enabled = true;
-            buttonDown.Enabled = true;
-            buttonUp.BackgroundImage = Image.FromFile(@"..\..\up arrow.png");
-            buttonDown.BackgroundImage = Image.FromFile(@"..\..\down arrow.png");
-        }
-
         private void clickAnswer(string ansPattern)
         {
-            buttonUp.Enabled = false;
-            buttonDown.Enabled = false;
-
-            buttonUp.BackgroundImage = Image.FromFile(@"..\..\up disable.png");
-            buttonDown.BackgroundImage = Image.FromFile(@"..\..\down disable.png");
-
-            timeAnswer = DateTime.Now.Ticks;
-            long RT = (timeAnswer - timeAsk) / 10000;
-
-            if (currPattern == ansPattern)
+            if(answerMode)
             {
-                logWriter.WriteLine((stimuliIdx+1).ToString() + "," + currPattern + "," + ansPattern + "," + "1" + "," + RT.ToString());
-                logWriter.Flush();
-            }
-            else
-            {
-                logWriter.WriteLine((stimuliIdx+1).ToString() + "," + currPattern + "," + ansPattern + "," + "0" + "," + RT.ToString());
-                logWriter.Flush();
-            }
-
-            if (++stimuliIdx >= 50)
-            {
-                labelGuide.Text = "Finished!";
-                labelOrder.Text = "Finished!";
-            }
-            else
-            {
-                Delay(500);
-
-                labelOrder.Text = (stimuliIdx + 1).ToString() + " / 50";
-                labelGuide.Text = "";
+                if(currPattern == ansPattern && currPattern == "u")
+                {
+                    buttonUp.FlatAppearance.BorderColor = Color.Green;
+                    buttonUp.FlatAppearance.BorderSize = 3;
+                    Delay(500);
+                    buttonUp.FlatAppearance.BorderSize = 0;
+                }
+                else if(currPattern == ansPattern && currPattern == "d")
+                {
+                    buttonDown.FlatAppearance.BorderColor = Color.Green;
+                    buttonDown.FlatAppearance.BorderSize = 3;
+                    Delay(500);
+                    buttonDown.FlatAppearance.BorderSize = 0;
+                }
+                else if(currPattern != ansPattern && currPattern == "u")
+                {
+                    buttonUp.FlatAppearance.BorderColor = Color.Green;
+                    buttonUp.FlatAppearance.BorderSize = 3;
+                    buttonDown.FlatAppearance.BorderColor = Color.Red;
+                    buttonDown.FlatAppearance.BorderSize = 3;
+                    Delay(500);
+                    buttonUp.FlatAppearance.BorderSize = 0;
+                    buttonDown.FlatAppearance.BorderSize = 0;
+                }
+                else if (currPattern != ansPattern && currPattern == "d")
+                {
+                    buttonUp.FlatAppearance.BorderColor = Color.Red;
+                    buttonUp.FlatAppearance.BorderSize = 3;
+                    buttonDown.FlatAppearance.BorderColor = Color.Green;
+                    buttonDown.FlatAppearance.BorderSize = 3;
+                    Delay(500);
+                    buttonUp.FlatAppearance.BorderSize = 0;
+                    buttonDown.FlatAppearance.BorderSize = 0;
+                }
                 buttonPlay.Enabled = true;
                 buttonPlay.BackgroundImage = Image.FromFile(@"..\..\play icon.png");
+                answerMode = false;
             }
+            else
+            {
+                labelGuide.Text = "Playing";
+                playPattern(ansPattern);
+                labelGuide.Text = "";
+            }
+            
         }
 
         private void playPattern(string pattern)
@@ -230,6 +192,21 @@ namespace MmtdSkinDragTest
             return DateTime.Now;
         }
 
+        private void buttonPlay_Click(object sender, EventArgs e)
+        {
+            Random rand = new Random();
+            currPattern = patternString[rand.Next(2)];
+            buttonPlay.Enabled = false;
+            buttonPlay.BackgroundImage = Image.FromFile(@"..\..\play disable.png");
+            labelGuide.Text = "Playing";
+            Random random = new Random();
+            Delay(random.Next(maxOnsetDelay) + 1000);
+
+            playPattern(currPattern);
+            labelGuide.Text = "Click the answer";
+            answerMode = true;
+        }
+
         private void buttonUp_Click(object sender, EventArgs e)
         {
             clickAnswer("u");
@@ -247,7 +224,7 @@ namespace MmtdSkinDragTest
 
         private void buttonUp_MouseLeave(object sender, EventArgs e)
         {
-            if(buttonUp.Enabled)
+            if (buttonUp.Enabled)
                 buttonUp.BackgroundImage = Image.FromFile(@"..\..\up arrow.png");
         }
 
@@ -258,7 +235,7 @@ namespace MmtdSkinDragTest
 
         private void buttonPlay_MouseLeave(object sender, EventArgs e)
         {
-            if(buttonPlay.Enabled)
+            if (buttonPlay.Enabled)
                 buttonPlay.BackgroundImage = Image.FromFile(@"..\..\play icon.png");
         }
 
@@ -269,7 +246,7 @@ namespace MmtdSkinDragTest
 
         private void buttonDown_MouseLeave(object sender, EventArgs e)
         {
-            if(buttonDown.Enabled)
+            if (buttonDown.Enabled)
                 buttonDown.BackgroundImage = Image.FromFile(@"..\..\down arrow.png");
         }
     }
